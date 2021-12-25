@@ -4,7 +4,6 @@ from discord.ext import commands
 from dotenv import load_dotenv
 import requests
 from requests.models import Response
-from utils import testroman
 
 load_dotenv(dotenv_path="config")#où se trouve le token
 
