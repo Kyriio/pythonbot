@@ -147,4 +147,4 @@ async def random_meme(ctx):
 
 
 
-bot.run(os.environ['TOKEN']
+bot.run(os.environ['TOKEN'])
