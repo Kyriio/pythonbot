@@ -3,6 +3,10 @@ import os
 from discord.ext import commands
 import dotenv
 import requests
+from config import api_lol, TOKEN
+
+
+dotenv.load_dotenv(dotenv_path="./.env/config")#où se trouve le token
 
 
 intents = discord.Intents(messages=True,guilds=True,reactions=True,members=True,presences=True)
@@ -63,7 +67,7 @@ async def help(ctx):
 @bot.command()
 async def lol_profile(ctx,name):
     
-    url = f'https://euw1.api.riotgames.com/lol/summoner/v4/summoners/by-name/{name}?api_key='+os.environ['api_lol']
+    url = f'https://euw1.api.riotgames.com/lol/summoner/v4/summoners/by-name/{name}?api_key='+api_lol
     response = requests.get(url)
     data = response.json()
     name = data['name']
@@ -90,12 +94,12 @@ def romain_to_int(num: str) -> int:
 #donne le rank de l'utilisateur
 @bot.command()
 async def rank_lol(ctx,name):
-    url = f'https://euw1.api.riotgames.com/lol/summoner/v4/summoners/by-name/{name}?api_key='+os.environ['api_lol']
+    url = f'https://euw1.api.riotgames.com/lol/summoner/v4/summoners/by-name/{name}?api_key='+api_lol
     response = requests.get(url)
     data = response.json()
 
     id_joueur = data['id']
-    url_rank = 'https://euw1.api.riotgames.com/lol/league/v4/entries/by-summoner/'+id_joueur+'?api_key='+os.environ['api_lol']
+    url_rank = 'https://euw1.api.riotgames.com/lol/league/v4/entries/by-summoner/'+id_joueur+'?api_key='+api_lol
     response_rank= requests.get(url_rank)
 
     data_rank=response_rank.json()
@@ -126,7 +130,7 @@ async def rank_lol(ctx,name):
     embed.insert_field_at(index=2, name = "Losses : ", value = losses)
     embed.insert_field_at(index=3, name = "Winrate : ", value = (round((wins/ratio)*100,2)))
 
-    await ctx.send(data)
+    await ctx.send(embed=embed)
 
 @bot.command()
 async def random_meme(ctx):
@@ -143,4 +147,4 @@ async def random_meme(ctx):
 
 
 
-bot.run(os.environ['TOKEN'])
+bot.run(TOKEN)
