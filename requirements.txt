@@ -1,2 +1,5 @@
-discord.py
-asyncio
+discord
+os
+discord.ext
+dotenv
+requests
