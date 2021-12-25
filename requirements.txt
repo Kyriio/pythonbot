@@ -1,5 +1,5 @@
 discord
 os
 discord.ext
-dotenv
+python-dotenv
 requests
