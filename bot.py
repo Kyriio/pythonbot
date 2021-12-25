@@ -1,11 +1,12 @@
 import discord
 import os
 from discord.ext import commands
-import dotenv 
+import dotenv
 import requests
 from requests.models import Response
+from utils import testroman
 
-dotenv.load_dotenv(dotenv_path="config")#où se trouve le token
+dotenv.load_dotenv(dotenv_path="./.env/config")#où se trouve le token
 
 
 intents = discord.Intents(messages=True,guilds=True,reactions=True,members=True,presences=True)
