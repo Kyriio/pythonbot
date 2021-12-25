@@ -7,7 +7,6 @@ import requests
 
 dotenv.load_dotenv(dotenv_path="./.env/config")#où se trouve le token
 
-
 intents = discord.Intents(messages=True,guilds=True,reactions=True,members=True,presences=True)
 bot = commands.Bot(command_prefix="*",intents=intents)
 bot.remove_command('help') # ajout du help perso
