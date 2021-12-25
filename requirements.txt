@@ -1,5 +1,5 @@
-discord
-os
-discord.ext
-python-dotenv
-requests
+import discord
+import os
+from discord.ext import commands
+import dotenv
+import requests
