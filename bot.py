@@ -142,5 +142,5 @@ async def random_meme(ctx):
     await ctx.send(embed=embed)
 
 
-
-bot.run(os.environ['TOKEN'])
+token = os.environ['TOKEN]
+bot.run(token)
