@@ -3,8 +3,7 @@ import os
 from discord.ext import commands
 import dotenv
 import requests
-from requests.models import Response
-from utils import testroman
+
 
 dotenv.load_dotenv(dotenv_path="./.env/config")#où se trouve le token
 
