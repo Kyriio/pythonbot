@@ -3,7 +3,7 @@ import os
 from discord.ext import commands
 import dotenv
 import requests
-from config import api_lol, TOKEN
+
 
 
 dotenv.load_dotenv(dotenv_path="./.env/config")#où se trouve le token
