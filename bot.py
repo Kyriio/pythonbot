@@ -5,10 +5,6 @@ import dotenv
 import requests
 
 
-
-dotenv.load_dotenv(dotenv_path="./.env/config")#où se trouve le token
-
-
 intents = discord.Intents(messages=True,guilds=True,reactions=True,members=True,presences=True)
 bot = commands.Bot(command_prefix="*",intents=intents)
 bot.remove_command('help') # ajout du help perso
@@ -130,7 +126,7 @@ async def rank_lol(ctx,name):
     embed.insert_field_at(index=2, name = "Losses : ", value = losses)
     embed.insert_field_at(index=3, name = "Winrate : ", value = (round((wins/ratio)*100,2)))
 
-    await ctx.send(embed=embed)
+    await ctx.send(data)
 
 @bot.command()
 async def random_meme(ctx):
