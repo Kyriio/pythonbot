@@ -1,7 +1,7 @@
 import discord
 import os
 from discord.ext import commands
-from dotenv 
+import dotenv 
 import requests
 from requests.models import Response
 
