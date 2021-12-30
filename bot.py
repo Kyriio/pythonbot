@@ -54,8 +54,10 @@ async def help(ctx):
     embed.add_field(name=' ⁢', value="-lol_profile nom **(Donne l'icone et le lvl d'un invocateur)**",inline=False)
     embed.add_field(name=' ⁢', value="-rank_lol nom **(Donne le rank de l'invocateur)**",inline=False)
     embed.add_field(name=' ⁢', value="-ugg nom **(Donne le lien ugg d'un invocateur)**",inline=False)
+    embed.add_field(name=' ⁢', value="-avatar nom **(Donne le la pp de la personne)**",inline=False)
     embed.add_field(name=' ⁢', value="-random_meme **Tout est dans le nom**",inline=False)
     embed.add_field(name=' ⁢', value="-del x **(Supprime le nombre de messages (modo uniquement))**",inline=False)
+    embed.add_field(name=' ⁢', value="-whois x **(Donne les infos d'une personne (modo uniquement))**",inline=False)
     embed.set_footer(text='[Prefix: * ]')
     await ctx.send(embed=embed)
 
@@ -141,6 +143,32 @@ async def random_meme(ctx):
 
     await ctx.send(embed=embed)
 
+@bot.command()
+async def avatar(ctx,member : discord.Member = None):
+    if member is None:
+        embed = discord.Embed(title=f"L'Avatar de : {ctx.author}", color =0xFF0000)
+        embed.set_image(url=ctx.author.avatar_url)
+    else:
+        embed = discord.Embed(title=f"L'Avatar de : {member} ",color=0xFF0000)
+        embed.set_image(url=member.avatar_url)
+    await ctx.send(embed=embed)
+
+@bot.command()
+@commands.has_permissions(administrator=True)
+async def whois(ctx,member : discord.Member=None):
+    if not member:
+        member = ctx.message.author
+        
+    roles = [role for role in member.roles]
+    embed = discord.Embed(color=0xFF0000, timestamp=ctx.message.created_at,title=f'Infos - {member}')
+    embed.set_thumbnail(url=member.avatar_url)
+    embed.set_footer(text=f'Demandé par {ctx.author}')
+    embed.add_field(name='ID: ' , value = member.id,inline=False)
+    embed.add_field(name='Nom : ', value=member.display_name,inline=False)
+    embed.add_field(name='Compte créé : ', value=member.created_at.strftime("%a,%#d %B %Y, %I:%M %p UTC"),inline=False)
+    embed.add_field(name='A rejoint le : ', value=member.joined_at.strftime("%a, %#d %B %Y, %I:%M %p UTC"),inline=False)
+    embed.add_field(name='Roles : ', value=' '.join([role.mention for role in roles]),inline=False)
+    await ctx.send(embed=embed)
 
 
 bot.run(os.environ['TOKEN'])
