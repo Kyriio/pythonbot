@@ -201,7 +201,8 @@ async def lastmatch(ctx,name):
         else:
             role = data_end_match['info']['participants'][i]['role']
 
-        embed = discord.Embed(title = f'La dernière game de : {name}',color=0xFF0000)
+        
+        embed = discord.Embed(title = f'La dernière game de : {name}'+' Match de type : '+ data_end_match['info']['gameMode']+'',color=0xFF0000)
         embed.set_footer(text=data_end_match['info']['participants'][i]['summonerName'])
         embed.add_field(name='Morts : ', value=data_end_match['info']['participants'][i]['deaths'])
         embed.add_field(name='Kills: ', value=data_end_match['info']['participants'][i]['kills'])
