@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 import requests
-
+import os
 
 class fun(commands.Cog):
     def __init__(self,bot):
