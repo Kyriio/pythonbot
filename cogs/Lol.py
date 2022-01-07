@@ -1,7 +1,6 @@
 import discord
 from discord.ext import commands
 import requests
-from config import api_lol
 
 
 def romain_to_int(num: str) -> int:
