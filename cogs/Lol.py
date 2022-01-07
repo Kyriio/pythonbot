@@ -25,10 +25,11 @@ class Lol(commands.Cog):
         embed = discord.Embed(description=f" <:peposhy:808356222675714058> Ugg de : {msg}  https://u.gg/lol/profile/euw1/{msg}/overview <:peposhy:808356222675714058> ",color =0xFF0000)
         await ctx.send(embed=embed)
 
+    #donne l'avatar et le pseudo + lvl lol
     @commands.command()
     async def lol_profile(self,ctx,name):
 
-        url = f'https://euw1.api.riotgames.com/lol/summoner/v4/summoners/by-name/{name}?api_key='+api_lol
+        url = f'https://euw1.api.riotgames.com/lol/summoner/v4/summoners/by-name/{name}?api_key='+os.environ['api_lol']
         response = requests.get(url)
         data = response.json()
         name = data['name']
@@ -44,17 +45,17 @@ class Lol(commands.Cog):
     #donne le rank de l'utilisateur
     @commands.command()
     async def rank_lol(self,ctx,name):
-        url = f'https://euw1.api.riotgames.com/lol/summoner/v4/summoners/by-name/{name}?api_key='+api_lol
+        url = f'https://euw1.api.riotgames.com/lol/summoner/v4/summoners/by-name/{name}?api_key='+os.environ['api_lol']
         response = requests.get(url)
         data = response.json()
 
         id_joueur = data['id']
-        url_rank = 'https://euw1.api.riotgames.com/lol/league/v4/entries/by-summoner/'+id_joueur+'?api_key='+api_lol
+        url_rank = 'https://euw1.api.riotgames.com/lol/league/v4/entries/by-summoner/'+id_joueur+'?api_key='+os.environ['api_lol']
         response_rank= requests.get(url_rank)
 
         data_rank=response_rank.json()
 
-        
+
         if (data_rank[0]['queueType']=="RANKED_SOLO_5x5"):
             data_rank=data_rank[0]
         elif(data_rank[1]['queueType']=="RANKED_SOLO_5x5"):
