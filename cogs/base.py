@@ -4,7 +4,6 @@ from discord import client
 from discord.ext import commands
 import dotenv
 import requests
-from config import api_lol, TOKEN
 
 
 class base(commands.Cog):
