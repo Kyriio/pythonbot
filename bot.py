@@ -54,7 +54,7 @@ async def help(ctx):
     embed.add_field(name=' ⁢', value="-lol_profile nom **(Donne l'icone et le lvl d'un invocateur)**",inline=False)
     embed.add_field(name=' ⁢', value="-rank_lol nom **(Donne le rank de l'invocateur)**",inline=False)
     embed.add_field(name=' ⁢', value="-ugg nom **(Donne le lien ugg d'un invocateur)**",inline=False)
-    embed.add_field(name=' ⁢', value="-avatar nom **(Donne le la pp de la personne)**",inline=False)
+    embed.add_field(name=' ⁢', value="-avatar nom **(Donne la pp de la personne)**",inline=False)
     embed.add_field(name=' ⁢', value="-random_meme **Tout est dans le nom**",inline=False)
     embed.add_field(name=' ⁢', value="-del x **(Supprime le nombre de messages (modo uniquement))**",inline=False)
     embed.add_field(name=' ⁢', value="-whois x **(Donne les infos d'une personne (modo uniquement))**",inline=False)
@@ -204,8 +204,8 @@ async def lastmatch(ctx,name):
         
         embed = discord.Embed(title = f'La dernière game de : {name}'+' Match de type : '+ data_end_match['info']['gameMode']+'',color=0xFF0000)
         embed.set_footer(text=data_end_match['info']['participants'][i]['summonerName'])
-        embed.add_field(name='Morts : ', value=data_end_match['info']['participants'][i]['deaths'])
         embed.add_field(name='Kills: ', value=data_end_match['info']['participants'][i]['kills'])
+        embed.add_field(name='Morts : ', value=data_end_match['info']['participants'][i]['deaths'])
         embed.add_field(name='Assists : ', value=data_end_match['info']['participants'][i]['assists'])
         embed.add_field(name='Role : ', value='**'+data_end_match['info']['participants'][i]['lane']+ ' ' + role +'**')
         embed.add_field(name='Champion : ', value='**'+data_end_match['info']['participants'][i]['championName']+'**')
