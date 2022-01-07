@@ -83,10 +83,9 @@ class Lol(commands.Cog):
         await ctx.send(embed=embed)
 
 
-    #donne le dernier match full embed de l'utilisateur
     @commands.command()
     async def lastmatch(self,ctx,name):
-        url = f'https://euw1.api.riotgames.com/lol/summoner/v4/summoners/by-name/{name}?api_key='+api_lol
+        url = f'https://euw1.api.riotgames.com/lol/summoner/v4/summoners/by-name/{name}?api_key='+os.environ['api_lol']
         response = requests.get(url)
         data = response.json()
 
@@ -94,18 +93,19 @@ class Lol(commands.Cog):
 
         print(puuid)
 
-        url_match = f'https://europe.api.riotgames.com/lol/match/v5/matches/by-puuid/'+puuid+'/ids?api_key='+api_lol
+        url_match = f'https://europe.api.riotgames.com/lol/match/v5/matches/by-puuid/'+puuid+'/ids?api_key='+os.environ['api_lol']
         response_match = requests.get(url_match)
 
         data_match = response_match.json()
 
         match_1= data_match[0]
 
-        get_info_match = f'https://europe.api.riotgames.com/lol/match/v5/matches/'+match_1+'?api_key='+api_lol
+        get_info_match = f'https://europe.api.riotgames.com/lol/match/v5/matches/'+match_1+'?api_key='+os.environ['api_lol']
         response_match_infos=requests.get(get_info_match)
 
         data_end_match = response_match_infos.json()
-        
+
+
 
         for i in range (0,len(data_end_match['info']['participants'])):
 
@@ -114,14 +114,14 @@ class Lol(commands.Cog):
             else:
                 role = data_end_match['info']['participants'][i]['role']
 
-            embed = discord.Embed(title = f'La dernière game de : {name}'+' ('+ data_end_match['info']['gameMode']+')',color=0xFF0000)
+
+            embed = discord.Embed(title = f'La dernière game de : {name}'+' Match de type : '+ data_end_match['info']['gameMode']+'',color=0xFF0000)
             embed.set_footer(text=data_end_match['info']['participants'][i]['summonerName'])
             embed.add_field(name='Kills: ', value=data_end_match['info']['participants'][i]['kills'])
             embed.add_field(name='Morts : ', value=data_end_match['info']['participants'][i]['deaths'])
             embed.add_field(name='Assists : ', value=data_end_match['info']['participants'][i]['assists'])
             embed.add_field(name='Role : ', value='**'+data_end_match['info']['participants'][i]['lane']+ ' ' + role +'**')
             embed.set_thumbnail(url='https://ddragon.leagueoflegends.com/cdn/12.1.1/img/champion/'+data_end_match['info']['participants'][i]['championName']+'.png')
-
 
             await ctx.send(embed=embed)
 
