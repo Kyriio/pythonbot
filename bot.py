@@ -3,10 +3,7 @@ import os
 from discord import client
 from discord.ext import commands
 import dotenv
-from config import TOKEN
 
-
-dotenv.load_dotenv(dotenv_path="./.env/config")#où se trouve le token
 
 intents = discord.Intents(messages=True,guilds=True,reactions=True,members=True,presences=True)
 bot = commands.Bot(command_prefix="*",intents=intents)
