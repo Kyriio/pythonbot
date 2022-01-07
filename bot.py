@@ -208,7 +208,7 @@ async def lastmatch(ctx,name):
         embed.add_field(name='Morts : ', value=data_end_match['info']['participants'][i]['deaths'])
         embed.add_field(name='Assists : ', value=data_end_match['info']['participants'][i]['assists'])
         embed.add_field(name='Role : ', value='**'+data_end_match['info']['participants'][i]['lane']+ ' ' + role +'**')
-        embed.add_field(name='Champion : ', value='**'+data_end_match['info']['participants'][i]['championName']+'**')
+        embed.set_thumbnail(url='https://ddragon.leagueoflegends.com/cdn/12.1.1/img/champion/'+data_end_match['info']['participants'][i]['championName']+'.png')
 
         await ctx.send(embed=embed)
 
