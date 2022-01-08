@@ -9,7 +9,7 @@ class admin(commands.Cog):
 
     @commands.command()
     @commands.has_permissions(administrator=True)
-    async def whois(ctx,member : discord.Member=None):
+    async def whois(self,ctx,member : discord.Member=None):
         if not member:
             member = ctx.message.author
             
