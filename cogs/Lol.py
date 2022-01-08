@@ -125,7 +125,7 @@ class Lol(commands.Cog):
             embed.add_field(name='Morts : ', value=data_end_match['info']['participants'][i]['deaths'])
             embed.add_field(name='Assists : ', value=data_end_match['info']['participants'][i]['assists'])
             embed.add_field(name='Role : ', value='**'+data_end_match['info']['participants'][i]['lane']+ ' ' + role +'**')
-            embed.set_thumbnail(url='https://ddragon.leagueoflegends.com/cdn/12.1.1/img/champion/'+cham_name+'.png')
+            embed.set_thumbnail(url='https://ddragon.leagueoflegends.com/cdn/12.1.1/img/champion/'+champ_name+'.png')
 
             await ctx.send(embed=embed)
 
