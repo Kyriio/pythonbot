@@ -113,6 +113,10 @@ class Lol(commands.Cog):
                 role = ''
             else:
                 role = data_end_match['info']['participants'][i]['role']
+                
+            champ_name= data_end_match['info']['participants'][i]['championName']
+            champ_name.lower()
+            champ_name.capitalize()
 
 
             embed = discord.Embed(title = f'La dernière game de : {name}'+' Match de type : '+ data_end_match['info']['gameMode']+'',color=0xFF0000)
@@ -121,7 +125,7 @@ class Lol(commands.Cog):
             embed.add_field(name='Morts : ', value=data_end_match['info']['participants'][i]['deaths'])
             embed.add_field(name='Assists : ', value=data_end_match['info']['participants'][i]['assists'])
             embed.add_field(name='Role : ', value='**'+data_end_match['info']['participants'][i]['lane']+ ' ' + role +'**')
-            embed.set_thumbnail(url='https://ddragon.leagueoflegends.com/cdn/12.1.1/img/champion/'+data_end_match['info']['participants'][i]['championName']+'.png')
+            embed.set_thumbnail(url='https://ddragon.leagueoflegends.com/cdn/12.1.1/img/champion/'+cham_name+'.png')
 
             await ctx.send(embed=embed)
 
