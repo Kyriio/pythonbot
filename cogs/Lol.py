@@ -115,8 +115,8 @@ class Lol(commands.Cog):
                 role = data_end_match['info']['participants'][i]['role']
                 
             champ_name= data_end_match['info']['participants'][i]['championName']
-            champ_name.lower()
-            champ_name.capitalize()
+            if champ_name =="FiddleSticks":
+                champ_name="Fiddlesticks"
 
 
             embed = discord.Embed(title = f'La dernière game de : {name}'+' Match de type : '+ data_end_match['info']['gameMode']+'',color=0xFF0000)
