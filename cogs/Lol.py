@@ -20,7 +20,9 @@ class Lol(commands.Cog):
 
 
     @commands.command()
-    async def ugg(self,ctx,msg):
+    async def ugg(self,ctx,*,msg):
+        if msg.isspace():
+            msg.replace(" ", "")
         embed = discord.Embed(description=f" <:peposhy:808356222675714058> Ugg de : {msg}  https://u.gg/lol/profile/euw1/{msg}/overview <:peposhy:808356222675714058> ",color =0xFF0000)
         await ctx.send(embed=embed)
 
@@ -43,7 +45,10 @@ class Lol(commands.Cog):
 
     #donne le rank de l'utilisateur
     @commands.command()
-    async def rank_lol(self,ctx,name):
+    async def rank_lol(self,ctx,*,name):
+        if name.isspace():
+            name.replace(" ", "")
+            
         url = f'https://euw1.api.riotgames.com/lol/summoner/v4/summoners/by-name/{name}?api_key='+os.environ['api_lol']
         response = requests.get(url)
         data = response.json()
@@ -84,7 +89,11 @@ class Lol(commands.Cog):
 
 
     @commands.command()
-    async def lastmatch(self,ctx,name):
+    async def lastmatch(self,ctx,*,name):
+        
+        if name.isspace():
+            name.replace(" ", "")
+
         url = f'https://euw1.api.riotgames.com/lol/summoner/v4/summoners/by-name/{name}?api_key='+os.environ['api_lol']
         response = requests.get(url)
         data = response.json()
@@ -128,6 +137,94 @@ class Lol(commands.Cog):
             embed.set_thumbnail(url='https://ddragon.leagueoflegends.com/cdn/12.1.1/img/champion/'+champ_name+'.png')
 
             await ctx.send(embed=embed)
+            
+    @commands.command()
+    async def kda(self,ctx,*,name):
+        if name.isspace():
+            name.replace(" ", "")
+
+        url = f'https://euw1.api.riotgames.com/lol/summoner/v4/summoners/by-name/{name}?api_key='+os.environ['api_lol']
+        response = requests.get(url)
+        data = response.json()
+        #Ici on prend le puuid du joueur
+        puuid= data['puuid']
+
+
+        url_match = f'https://europe.api.riotgames.com/lol/match/v5/matches/by-puuid/'+puuid+'/ids?api_key='+os.environ['api_lol']
+        response_match = requests.get(url_match)
+        #Ici on prend le match
+        data_match = response_match.json()
+
+        #Set des variables pour KDA global
+        killtotal=0
+        mortotal=0
+        assisttotal=0
+
+        for i in range(9,-1,-1):
+            get_info_match = f'https://europe.api.riotgames.com/lol/match/v5/matches/'+data_match[i]+'?api_key='+os.environ['api_lol']
+            response_match_infos=requests.get(get_info_match)
+
+            #On prend le match courant
+            data_end_match = response_match_infos.json()
+
+            Killcount=0
+            Deathcount=0
+            Assitscount=0
+
+            for j in range (10):
+
+                if data_end_match['info']['participants'][j]['summonerName'] != name:
+                    pass
+                else:
+
+                    if(data_end_match['info']['participants'][j]['role'] == "NONE"):
+                        role = ''
+                    else:
+                        role = data_end_match['info']['participants'][j]['role']
+
+
+                    champ_name= data_end_match['info']['participants'][j]['championName']
+                    if champ_name =="FiddleSticks":
+                        champ_name="Fiddlesticks"
+
+
+                    Killcount += data_end_match['info']['participants'][j]['kills']
+                    Deathcount += data_end_match['info']['participants'][j]['deaths']
+                    Assitscount +=data_end_match['info']['participants'][j]['assists']
+
+                    killtotal += data_end_match['info']['participants'][j]['kills']
+                    mortotal += data_end_match['info']['participants'][j]['deaths']
+                    assisttotal +=data_end_match['info']['participants'][j]['assists']
+
+                    if Deathcount == 0:
+                        embed = discord.Embed(title = f'KDA des 10 dernières game de {name}',color=0xFF0000)
+                        embed.add_field(name='Role : ', value=''+data_end_match['info']['participants'][j]['lane']+ ' ' + role +'')
+                        embed.add_field(name='Kills: ', value=data_end_match['info']['participants'][j]['kills'])
+                        embed.add_field(name='Morts : ', value=data_end_match['info']['participants'][j]['deaths'])
+                        embed.add_field(name='Assists : ', value=data_end_match['info']['participants'][j]['assists'])
+                        embed.add_field(name='KDA :  ', value=(Killcount+Assitscount))
+                        embed.set_thumbnail(url='https://ddragon.leagueoflegends.com/cdn/12.1.1/img/champion/'+champ_name+'.png')
+
+                        await ctx.send(embed=embed)
+                    else:
+                        embed = discord.Embed(title = f'KDA des 10 dernières game de {name}',color=0xFF0000)
+                        embed.add_field(name='Role : ', value=''+data_end_match['info']['participants'][j]['lane']+ ' ' + role +'')
+                        embed.add_field(name='Kills: ', value=data_end_match['info']['participants'][j]['kills'])
+                        embed.add_field(name='Morts : ', value=data_end_match['info']['participants'][j]['deaths'])
+                        embed.add_field(name='Assists : ', value=data_end_match['info']['participants'][j]['assists'])
+                        embed.add_field(name='KDA :  ', value=((Killcount+Assitscount)/Deathcount))
+                        embed.set_thumbnail(url='https://ddragon.leagueoflegends.com/cdn/12.1.1/img/champion/'+champ_name+'.png')
+                        await ctx.send(embed=embed)
+
+        if mortotal == 0:
+            embed = discord.Embed(title=f'KDA GLOBAL DE {name}      ',color=0xFF0000)
+            embed.add_field(name='KDA :  ', value=(killtotal+assisttotal)) 
+            await ctx.send(embed=embed)
+        else:
+            embed = discord.Embed(title=f'KDA GLOBAL DE {name}',color=0xFF0000)
+            embed.add_field(name='KDA :  ', value=(killtotal+assisttotal)/mortotal) 
+            await ctx.send(embed=embed)
+
 
 def setup(bot):
     bot.add_cog(Lol(bot))
