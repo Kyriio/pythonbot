@@ -29,7 +29,9 @@ class Lol(commands.Cog):
     #donne l'avatar et le pseudo + lvl lol
     @commands.command()
     async def lol_profile(self,ctx,name):
-
+        
+        if name.isspace():
+            name.replace(" ", "")
         url = f'https://euw1.api.riotgames.com/lol/summoner/v4/summoners/by-name/{name}?api_key='+os.environ['api_lol']
         response = requests.get(url)
         data = response.json()
