@@ -28,7 +28,7 @@ class Lol(commands.Cog):
 
     #donne l'avatar et le pseudo + lvl lol
     @commands.command()
-    async def lol_profile(self,ctx,name):
+    async def lol_profile(self,ctx,*,name):
         
         if name.isspace():
             name.replace(" ", "")
