@@ -2,4 +2,4 @@
 
 Utilisation d'api : RIOT games
 
-Hébergé chez Heroku
+Hébergé chez Heroku (utilisation des variables env sur ce site)
